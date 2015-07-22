@@ -1,0 +1,251 @@
+body {
+	background-color: #eaeaea;
+	font-family: Arial, sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	margin: 0;
+}
+
+h2 {
+	text-align: center;
+}
+
+h2,
+input,
+textarea {
+	color: #086736;
+}
+
+.container {
+	background-color: #fafafa;
+	box-shadow: 0px 0px 15px #aaa;
+	border-radius: 5px;
+	padding-top: 50px;
+	padding-bottom: 80px;
+	margin: 40px 0;
+}
+
+button {
+	outline: none;
+}
+button.submit {
+	border-radius: 5px;
+	border: 2px solid #086736;
+	background: #086736;
+	color: #fff;
+	cursor: pointer;
+	padding: 7px 15px;
+	font-weight: bold;
+	font-family: Arial, sans-serif;
+    font-size: 15px;
+}
+button.submit:hover {
+	background: #59993E;
+	border-color: #59993E;
+}
+button.submit:disabled {
+	background: 0;
+	border: 2px solid #086736;
+	color: #086736;
+	cursor: not-allowed;
+}
+label {
+	font-size: 16px;
+	margin: 5px 0 5px 0;
+	padding-left: 5px;
+	display: inline-block;
+}
+
+.radio-buttons {
+	display: inline;
+	margin-bottom: 20px;
+	padding: 0;
+	text-align: center;
+}
+
+input,
+textarea {
+	outline: none;
+}
+
+input:not([type="radio"]):not([type="checkbox"]):not([type="file"]) {
+	margin-bottom: 20px;
+	display: block;
+	width: 100%;
+	padding: 10px;
+	font-family: Arial, sans-serif;
+	font-weight: bold;
+	font-size: 18px;	
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 2px 6px rgba(0,0,0,0.2);
+	box-shadow: inset 0 2px 6px rgba(0,0,0,0.2);
+}
+input:not([type="radio"]):not([type="checkbox"]).error,
+textarea.error {
+	border-color: #a94442;
+	box-shadow: inset 0 2px 6px rgba(169,68,66,0.2);
+}
+textarea {
+	margin-bottom: 20px;
+	display: block;
+	width: 100%;
+	padding: 10px;
+	height: 100px;
+	resize: none;
+	font-family: Arial, sans-serif;
+	font-weight: bold;
+	font-size: 16px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+.status {
+	padding: 5px;
+	margin: 5px 0;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	text-align: center;
+	display: inherit;
+}
+form .status {
+	display: inline-block;
+	margin: 0 0 0 20px;
+	padding: 2px 6px;
+}
+.status-success {
+	color: #3c763d;
+	background-color: #dff0d8;
+	border-color: #d6e9c6;
+}
+.status-error {
+	color: #a94442;
+	background-color: #f2dede;
+	border-color: #ebccd1;
+}
+
+/*	start responsive grid system
+ *  adjust the width of columns to preset fractions of 100% parent width
+ *  depedning on screen width
+ *
+ *	xs = extra small screen (phone screen, <= 767px)
+ *	sm = small screen (average tablet screen, 768px - 991px)
+ *	md = medium screen (small laptop screen, 992px - 1199px)
+ *	lg = large screen ( >15" laptop or desktop, >= 1200px)
+ *
+ *	12 was chosen as a full width element because it has many factors (1, 2, 3, 4, 6, 12)
+ *  which allows the most practical and easiest division of a row element in to col elements.
+ * 
+ *  eg. an element with class="col-xs-12 col-md-6" is a full width element at screen sizes
+ *  smaller than 992px and a half width element at anything larger
+*/
+.col-lg-1,.col-lg-2,.col-lg-3,.col-lg-4,.col-lg-6,.col-lg-8,.col-lg-10,.col-lg-12,.col-md-1,.col-md-2,.col-md-3,.col-md-4,.col-md-6,.col-md-8,.col-md-10,.col-md-12,.col-sm-1,.col-sm-2,.col-sm-3,.col-sm-4,.col-sm-6,.col-sm-8,.col-sm-10,.col-sm-12,.col-xs-1,.col-xs-2,.col-xs-3,.col-xs-4,.col-xs-6,.col-xs-8,.col-xs-10,.col-xs-12 {
+	min-height: 1px;
+	padding-left: 15px;
+	padding-right: 15px;
+	float: left;
+}
+
+.col-xs-1 { width: 8.3333333%; }
+.col-xs-2 { width: 16.666666%; }
+.col-xs-3 { width: 25%; }
+.col-xs-4 { width: 33.333333%; }
+.col-xs-6 { width: 50%; }
+.col-xs-8 { width: 66.666666%; }
+.col-xs-9 { width: 75%; }
+.col-xs-10 { width: 83.333333%; }
+.col-xs-12 { width: 100%; }
+@media screen and (min-width: 768px) {
+	.col-sm-1 { width: 8.3333333%; }
+	.col-sm-2 { width: 16.666666%; }
+	.col-sm-3 { width: 25%; }
+	.col-sm-4 { width: 33.333333%; }
+	.col-sm-6 { width: 50%; }
+	.col-sm-8 { width: 66.666666%; }
+	.col-sm-9 { width: 75%; }
+	.col-sm-10 { width: 83.333333%; }
+	.col-sm-12 { width: 100%; }
+}
+@media screen and (min-width: 992px) {
+	.col-md-1 { width: 8.3333333%; }
+	.col-md-2 { width: 16.666666%; }
+	.col-md-3 { width: 25%; }
+	.col-md-4 { width: 33.333333%; }
+	.col-md-6 { width: 50%; }
+	.col-md-8 { width: 66.666666%; }
+	.col-md-9 { width: 75%; }
+	.col-md-10 { width: 83.333333%; }
+	.col-md-12 { width: 100%; }
+}
+@media screen and (min-width: 1200px) {
+	.col-lg-1 { width: 8.3333333%; }
+	.col-lg-2 { width: 16.666666%; }
+	.col-lg-3 { width: 25%; }
+	.col-lg-4 { width: 33.333333%; }
+	.col-lg-6 { width: 50%; }
+	.col-lg-8 { width: 66.666666%; }
+	.col-lg-9 { width: 75%; }
+	.col-lg-10 { width: 83.333333%; }
+	.col-lg-12 { width: 100%; }
+}
+/* end responsive grid system */
+
+/* start responsive visibility */
+/* this allows elements to be hidden and displayed at different screen sizes */
+.visible-xs,.visible-sm,.visible-md,.visible-lg {
+	display: none!important;
+}
+@media screen and (max-width: 767px) {
+	.visible-xs { display: block!important; }
+	.hidden-xs { display: none!important; }
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+	.visible-sm { display: block!important; }
+	.hidden-sm { display: none!important; }
+}
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+	.visible-md { display: block!important; }
+	.hidden-md { display: none!important; }	
+}
+@media screen and (min-width: 1200px) {
+	.visible-lg { display: block!important; }
+	.hidden-lg { display: none!important; }	
+}
+/* end responsive visibility*/
+
+/* start clearfix */
+.container:before,
+.container:after,
+.row:before,
+.row:after {
+	display: table;
+	content: " ";
+}
+.container:after,
+.row:after {
+	clear: both;
+}
+/* end clearfix */
+
+/* include padding in width calculation */
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* start helper classes */
+.no-padding { padding: 0!important; }
+.no-margin { margin: 0!important; }
+.center { text-align: center!important; }
+.block {display: block!important;}
+.center-block {
+	margin-left: auto;
+	margin-right: auto;
+	clear: both;
+	float: none;
+}
+/* end helper classes */
