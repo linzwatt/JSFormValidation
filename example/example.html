@@ -38,10 +38,10 @@
                     </div>
 
                     <label>Email</label><span class="status" id="email-status"></span>
-                    <input type="email" name="email" placeholder="Email" data-validation="req len:0-50 regex:email">
+                    <input type="email" name="email" placeholder="Email" data-validation="len:0-50 regex:email or:phone:Phone">
 
                     <label>Phone</label><span class="status" id="phone-status"></span>
-                    <input type="tel" name="phone" placeholder="Phone" data-validation="len:0-15 regex:phone"/>
+                    <input type="tel" name="phone" placeholder="Phone" data-validation="len:0-15 regex:phone or:email:Email"/>
 
                     <label>Add a Message</label><span class="status" id="message-status"></span>
                     <textarea name="message" placeholder="Message" data-validation="len:0-500"></textarea>
@@ -53,15 +53,15 @@
                             </div>
                             <div class="col-xs-4 checkboxes">
                                 <label>Phone</label>
-                                <input type="checkbox" name="contact" value="phone" data-validation="checkbox:contact:0-2">
+                                <input type="checkbox" name="contact" value="phone" data-validation="checkbox:contact:1-2">
                             </div>
                             <div class="col-xs-4 checkboxes">
                                 <label>Email</label>
-                                <input type="checkbox" name="contact" value="email" data-validation="checkbox:contact:0-2">
+                                <input type="checkbox" name="contact" value="email" data-validation="checkbox:contact:1-2">
                             </div>
                             <div class="col-xs-4 checkboxes">
                                 <label>Owl Post</label>
-                                <input type="checkbox" name="contact" value="owl-post" data-validation="checkbox:contact:0-2">
+                                <input type="checkbox" name="contact" value="owl-post" data-validation="checkbox:contact:1-2">
                             </div>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
             </form>
         </div>
     </body>
-    <script src="../FormValidation.min.js"></script>
+    <script src="../FormValidation.js"></script>
     <script>
         FormValidation(document.getElementById("register-form"));
     </script>

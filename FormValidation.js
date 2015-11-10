@@ -49,7 +49,8 @@ function FormValidation(form) {
         var field_object = {
             field: field,
             status_id: "#" + field.name + "-status",
-            validation: field.attributes['data-validation'].value.split(" ")
+            validation: field.attributes['data-validation'].value.split(" "),
+            valid: false
             // validation is an array of each validation type specified for the field
         };
         // onchange event is required for radio and checkbox fields
@@ -57,7 +58,8 @@ function FormValidation(form) {
         if (field.type == "checkbox" || field.type == "radio") {
             field.onchange = validate;
         } else {
-            field.oninput = validate;       
+            field.oninput = validate;
+            field.onchange = validate;       
         }
         fields.push(field_object); // append the object to the array
     }
@@ -81,6 +83,7 @@ function FormValidation(form) {
                     // set the appropriate 'status' element to show the 'Good' message
                     setStatus(field.status_id, "Good", "success");
                     field.field.className = "";
+                    field.valid = true;
                 } else {
                     // set the appropriate 'status' element to show the error message
                     setStatus(field.status_id, status, "error");
@@ -88,6 +91,7 @@ function FormValidation(form) {
                     field.field.className = "error";
                     // the form is no longer valid since one field returned an error
                     form_valid = false;
+                    field.valid = false;
                     // break on the first error found for this field, and move to the next one
                     break;
                 }
@@ -106,74 +110,96 @@ function FormValidation(form) {
         var string = field_ob.field.value.trim();
 
         // case structure runs approptiate actions depending on the validation command string
-        if (type[0] == "len") {
-            // min and max are indexed from the command string
-            var min = parseInt(type[1].split("-")[0]);
-            var max = parseInt(type[1].split("-")[1]);
-            if (string.length < min) {
-                return "Must be longer than " + (min - 1) + " characters";
-            } else if (string.length > max) {
-                return "Must be shorter than " + (max + 1) + " characters";
-            }
-        } else if (type[0] == "regex") {
-            // get the regex pattern from the preset regex array
-            var preset = regex_presets[type[1]];
-            if (!preset.test(string)) {
-                if (type[1] == "email") {
-                    // for email regex, provide a more helpful error message
-                    return "Not a valid email address";
+        switch (type[0]) {
+            case "len":
+                // min and max are indexed from the command string
+                var min = parseInt(type[1].split("-")[0]);
+                var max = parseInt(type[1].split("-")[1]);
+                if (string.length < min) {
+                    return "Must be longer than " + (min - 1) + " characters";
+                } else if (string.length > max) {
+                    return "Must be shorter than " + (max + 1) + " characters";
                 }
-                // if the string does not match regex, must contain invalid characters
-                return "Contains invalid characters";
-            }
-        } else if (type[0] == "match") {
-            // used for matching password and confirm password mainly
-            // finds the value of the matching field in the form and compares them
-            if (string != form.querySelector("[name='" + type[1] + "']").value) {
-                return "Does not match";
-            }
-        } else if (type[0] == "req") {
-            // use this for all required fields
-            if (string.length === 0) {
-                return "Required";
-            }
-        } else if (type[0] == "select-req") {
-            if (field_ob.field.selectedIndex === 0) {
-                return "Required";
-            }
-        } else if (type[0] == "select") {
-            return VALID;
-        } else if (type[0] == "checkbox") {
-            var min = parseInt(type[2].split("-")[0]);
-            var max = parseInt(type[2].split("-")[1]);
-            var boxes = form.querySelectorAll("[name='" + type[1] + "']");
-            var num_checked = 0;
-            for (var i = 0; i < boxes.length; ++i) {
-                if (boxes[i].checked) {
-                    ++num_checked;
+                break;
+            case "regex":
+                // get the regex pattern from the preset regex array
+                var preset = regex_presets[type[1]];
+                if (!preset.test(string)) {
+                    if (type[1] == "email") {
+                        if (string.length == 0)
+                            break;
+                        // for email regex, provide a more helpful error message
+                        return "Not a valid email address";
+                    }
+                    // if the string does not match regex, must contain invalid characters
+                    return "Contains invalid characters";
                 }
-            }
-            if (num_checked === 0 && min > 0) {
-                return "Required";
-            }
-            if (num_checked < min) {
-                return "Select at least " + min;
-            }
-            if (num_checked > max) {
-                return "Select " + max + " at most";
-            }
-        } else if (type[0] == "radio") {
-            // confirms that only one radio button is selected per group
-            var radios = form.querySelectorAll("[name='" + type[1] + "']");
-            var num_checked = 0;
-            for (var i = 0; i < radios.length; ++i) {
-                if (radios[i].checked) {
-                    ++num_checked;
+                break;
+            case "match":
+                // used for matching password and confirm password mainly
+                // finds the value of the matching field in the form and compares them
+                if (string != form.querySelector("[name='" + type[1] + "']").value) {
+                    return "Does not match";
                 }
-            }
-            if (num_checked != 1) {
-                return "Required";
-            }
+                break;
+            case "req":
+                // use this for all required fields
+                if (string.length === 0) {
+                    return "Required";
+                }
+                break;
+            case "select-req":
+                if (field_ob.field.selectedIndex === 0) {
+                    return "Required";
+                }
+                break;
+            case "select":
+                return VALID;
+            case "checkbox":
+                var min = parseInt(type[2].split("-")[0]);
+                var max = parseInt(type[2].split("-")[1]);
+                var boxes = form.querySelectorAll("[name='" + type[1] + "']");
+                var num_checked = 0;
+                for (var j = 0; j < boxes.length; ++j) {
+                    if (boxes[j].checked) {
+                        ++num_checked;
+                    }
+                }
+                if (num_checked === 0 && min > 0) {
+                    return "Required";
+                }
+                if (num_checked < min) {
+                    return "Select at least " + min;
+                }
+                if (num_checked > max) {
+                    return "Select " + max + " at most";
+                }
+                break;
+            case "radio":
+                // confirms that only one radio button is selected per group
+                var radios = form.querySelectorAll("[name='" + type[1] + "']");
+                var num_checked = 0;
+                for (var j = 0; j < radios.length; ++j) {
+                    if (radios[j].checked) {
+                        ++num_checked;
+                    }
+                }
+                if (num_checked != 1) {
+                    return "Required";
+                }
+                break;
+            case "or":
+                var other;
+                for (var j=0; j<fields.length; ++j) {
+                    if (fields[j].field.name === type[1])
+                        other = fields[j];
+                }
+                var other_len = other.field.value.trim().length;
+                var len = string.length;
+
+                if ((len == 0 && other_len == 0) || (!other.valid && other_len != 0)) {
+                    return "Either this or " + type[2] + " must be filled in";
+                }
         }
         // if string has passed all validation, return the VALID flag
         return VALID;
